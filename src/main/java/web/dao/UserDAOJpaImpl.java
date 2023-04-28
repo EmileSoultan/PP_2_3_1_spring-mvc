@@ -1,15 +1,13 @@
 package web.dao;
 
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.stereotype.Repository;
 import web.models.User;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
-@Component
-@Transactional(readOnly = true)
+@Repository
 public class UserDAOJpaImpl implements UserDAO {
     @PersistenceContext
     private EntityManager entityManager;
@@ -24,13 +22,11 @@ public class UserDAOJpaImpl implements UserDAO {
         return entityManager.find(User.class, id);
     }
 
-    @Transactional
     @Override
     public void save(User user) {
         entityManager.persist(user);
     }
 
-    @Transactional
     @Override
     public void update(long id, User user) {
         User userToBeUpdated = entityManager.find(User.class, id);
@@ -39,7 +35,6 @@ public class UserDAOJpaImpl implements UserDAO {
         userToBeUpdated.setEmail(user.getEmail());
     }
 
-    @Transactional
     @Override
     public void delete(long id) {
         User user = entityManager.find(User.class, id);
